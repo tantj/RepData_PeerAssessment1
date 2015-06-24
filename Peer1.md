@@ -5,14 +5,14 @@
   
 ## Prepare Environment and Load Data  
 1. Load required libraries  
-
-```r
-library(reshape2)
-library(dplyr)
-library(ggplot2)
-library(gridExtra)
-library(lattice)
-```
+  
+  ```r
+  library(reshape2)
+  library(dplyr)
+  library(ggplot2)
+  library(gridExtra)
+  library(lattice)
+  ```
 
 2. Load and group data  
 
@@ -166,7 +166,7 @@ stepMedianDiff
 Both mean and median fell, but median fell by a larger extent.  
 
 ## Are there differences in activity patterns between weekdays and weekends?  
-1. Create a new factor variable with two levels: "weekday" and "weekend."  
+1. Create a new factor variable with two levels: "weekday" and "weekend."
 
 ```r
 # Divide into weekday/weekend
@@ -174,8 +174,7 @@ activityPlus$day <- ifelse(as.POSIXlt(as.Date(activityPlus$date))$wday%%6 == 0, 
 activityPlus$day <- factor(activityPlus$day, levels = c("weekend", "weekday"))
 activityPlusInt <- aggregate(steps ~ interval + day, data = activityPlus, FUN = mean)
 ```
-
-2. Plot for weekends and weekdays 
+2. Plot for weekends and weekdays
 
 ```r
 # Plot lattice plot

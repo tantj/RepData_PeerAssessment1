@@ -10,13 +10,13 @@ output:
   
 ## Prepare Environment and Load Data  
 1. Load required libraries  
-```{r libraries, message=FALSE}
-library(reshape2)
-library(dplyr)
-library(ggplot2)
-library(gridExtra)
-library(lattice)
-```
+  ```{r libraries, message=FALSE}  
+  library(reshape2)  
+  library(dplyr)  
+  library(ggplot2)  
+  library(gridExtra)  
+  library(lattice)  
+  ```
 
 2. Load and group data  
 ``` {r data, results = "hide"}
