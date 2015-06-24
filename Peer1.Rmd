@@ -33,19 +33,16 @@ output:
   activity_sumDate <- summarise(activityByDate, steps = sum(steps))  
   
   # Plot histogram  
-  stepPlot <- ggplot(activity_sumDate, aes(steps)) +   
+  ggplot(activity_sumDate, aes(steps)) +   
     geom_histogram(breaks = seq(0, 25000, 1000), col = "white", fill = "orangered2") +  
     labs(title = "Total steps per day", x = "Steps", y = "Frequency") +  
     theme(text = element_text(size = 10, family = "Avenir"))  
-  stepPlot  
   ```
 
 2. Find mean and median number of steps  
   ``` {r stepmean}  
-  stepMean <- mean(activity_sumDate$steps)  
-  stepMean  
-  stepMedian <- median(activity_sumDate$steps)  
-  stepMedian  
+  mean(activity_sumDate$steps)  
+  median(activity_sumDate$steps)  
   ```  
 
 ## What is the average daily activity pattern?  
@@ -56,11 +53,10 @@ output:
   activity_sumTime <- summarise(activityByTime, steps = mean(steps))  
   
   # Plot time-series  
-  stepPlotTime <- ggplot(activity_sumTime, aes(x = interval, y = steps)) +   
+  ggplot(activity_sumTime, aes(x = interval, y = steps)) +   
     geom_line() +   
     labs(title = "Average steps per interval", x = "Time Interval", y = "Average steps") +   
     theme(text = element_text(size = 10, family = "Avenir"))  
-  stepPlotTime  
   ```  
   
 2. Find interval with maximum number of steps taken  
@@ -111,7 +107,10 @@ output:
 5. Find difference between mean and median of altered and unaltered values (altered minus unaltered)  
   ``` {r stepmeandiff}  
   stepMeanDiff <- stepMeanPlus - stepMean  
-  stepMedianPlus - stepMedian  
+  stepMeanDiff  
+  
+  stepMedianDiff <- stepMedianPlus - stepMedian  
+  stepMedianDiff  
   ```  
 Both mean and median fell, but median fell by a larger extent.  
   
@@ -120,7 +119,7 @@ Both mean and median fell, but median fell by a larger extent.
   ``` {r weekdiff}  
   # Divide into weekday/weekend  
   activityPlus$day <- ifelse(as.POSIXlt(as.Date(activityPlus$date))$wday%%6 == 0, "weekend", "weekday")  
-  activityPlus$day <- factor(activityPlus$day, levels = c("weekend", "weekday"))
+  activityPlus$day <- factor(activityPlus$day, levels = c("weekend", "weekday"))  
   activityPlusInt <- aggregate(steps ~ interval + day, data = activityPlus, FUN = mean)  
   ```  
   
@@ -128,6 +127,7 @@ Both mean and median fell, but median fell by a larger extent.
   ``` {r weekdiffplot}  
   # Plot lattice plot  
   activityPlusPlot <- xyplot(steps ~ interval | factor(day), data =   activityPlusInt, aspect = 1/2, type = "l", ylab = "Number of steps", xlab = "Interval")  
+  activityPlusPlot  
   ```  
 
 The plot shows that steps taken during weekends are more steady. Steps taken during weekdays show a large spike in the morning.  
