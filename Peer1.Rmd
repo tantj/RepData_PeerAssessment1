@@ -111,10 +111,7 @@ output:
 5. Find difference between mean and median of altered and unaltered values (altered minus unaltered)  
   ``` {r stepmeandiff}  
   stepMeanDiff <- stepMeanPlus - stepMean  
-  stepMeanDiff  
-  
-  stepMedianDiff <- stepMedianPlus - stepMedian  
-  stepMedianDiff  
+  stepMedianPlus - stepMedian  
   ```  
 Both mean and median fell, but median fell by a larger extent.  
   
@@ -123,14 +120,14 @@ Both mean and median fell, but median fell by a larger extent.
   ``` {r weekdiff}  
   # Divide into weekday/weekend  
   activityPlus$day <- ifelse(as.POSIXlt(as.Date(activityPlus$date))$wday%%6 == 0, "weekend", "weekday")  
-  activityPlus$day <- factor(activityPlus$day, levels = c("weekend", "weekday"))  
+  activityPlus$day <- factor(activityPlus$day, levels = c("weekend", "weekday"))
   activityPlusInt <- aggregate(steps ~ interval + day, data = activityPlus, FUN = mean)  
   ```  
+  
 2. Plot for weekends and weekdays  
   ``` {r weekdiffplot}  
   # Plot lattice plot  
   activityPlusPlot <- xyplot(steps ~ interval | factor(day), data =   activityPlusInt, aspect = 1/2, type = "l", ylab = "Number of steps", xlab = "Interval")  
-  activityPlusPlot  
   ```  
 
 The plot shows that steps taken during weekends are more steady. Steps taken during weekdays show a large spike in the morning.  
