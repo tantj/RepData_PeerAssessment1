@@ -40,9 +40,11 @@ output:
   ```
 
 2. Find mean and median number of steps  
-  ``` {r stepmean}  
-    mean(activity_sumDate$steps)  
-    median(activity_sumDate$steps)  
+  ``` {r stepmean}
+  stepMean <- mean(activity_sumDate$steps)  
+  stepMedian <- median(activity_sumDate$steps)  
+  mean(activity_sumDate$steps)  
+  median(activity_sumDate$steps)  
   ```  
 
 ## What is the average daily activity pattern?  

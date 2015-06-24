@@ -7,35 +7,34 @@
 1. Load required libraries  
   
   ```r
-  library(reshape2)  
-  library(dplyr)  
-  library(ggplot2)  
-  library(gridExtra)  
-  library(lattice)  
+    library(reshape2)  
+    library(dplyr)  
+    library(ggplot2)  
+    library(gridExtra)  
+    library(lattice)  
   ```
 
 2. Load and group data  
   
   ```r
-  activity <- read.csv("activity.csv", stringsAsFactors = FALSE)  
-  activityPlus <- activity  
-  activity <- activity[complete.cases(activity), ]  
+    activity <- read.csv("activity.csv", stringsAsFactors = FALSE)  
+    activityPlus <- activity  
+    activity <- activity[complete.cases(activity), ]  
   ```
 
 ## What is the mean number of steps per day?  
 1. Plot chart  
   
   ```r
-  # Summarise by date  
-  activityByDate <- group_by(activity, date)  
-  activity_sumDate <- summarise(activityByDate, steps = sum(steps))  
-  
-  # Plot histogram  
-  stepPlot <- ggplot(activity_sumDate, aes(steps)) +   
-    geom_histogram(breaks = seq(0, 25000, 1000), col = "white", fill = "orangered2") +  
-    labs(title = "Total steps per day", x = "Steps", y = "Frequency") +  
-    theme(text = element_text(size = 10, family = "Avenir"))  
-  stepPlot  
+    # Summarise by date  
+    activityByDate <- group_by(activity, date)  
+    activity_sumDate <- summarise(activityByDate, steps = sum(steps))  
+    
+    # Plot histogram  
+    ggplot(activity_sumDate, aes(steps)) +   
+      geom_histogram(breaks = seq(0, 25000, 1000), col = "white", fill = "orangered2") +  
+      labs(title = "Total steps per day", x = "Steps", y = "Frequency") +  
+      theme(text = element_text(size = 10, family = "Avenir"))  
   ```
   
   ![](Peer1_files/figure-html/stepsperday-1.png) 
@@ -44,7 +43,8 @@
   
   ```r
   stepMean <- mean(activity_sumDate$steps)  
-  stepMean  
+  stepMedian <- median(activity_sumDate$steps)  
+  mean(activity_sumDate$steps)  
   ```
   
   ```
@@ -52,8 +52,7 @@
   ```
   
   ```r
-  stepMedian <- median(activity_sumDate$steps)  
-  stepMedian  
+  median(activity_sumDate$steps)  
   ```
   
   ```
@@ -69,11 +68,10 @@
   activity_sumTime <- summarise(activityByTime, steps = mean(steps))  
   
   # Plot time-series  
-  stepPlotTime <- ggplot(activity_sumTime, aes(x = interval, y = steps)) +   
+  ggplot(activity_sumTime, aes(x = interval, y = steps)) +   
     geom_line() +   
     labs(title = "Average steps per interval", x = "Time Interval", y = "Average steps") +   
     theme(text = element_text(size = 10, family = "Avenir"))  
-  stepPlotTime  
   ```
   
   ![](Peer1_files/figure-html/timeseries-1.png) 
