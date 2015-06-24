@@ -11,40 +11,41 @@ output:
 ## Prepare Environment and Load Data  
 1. Load required libraries  
   ```{r libraries, message=FALSE}  
-    library(reshape2)  
-    library(dplyr)  
-    library(ggplot2)  
-    library(gridExtra)  
-    library(lattice)  
+  library(reshape2)  
+  library(dplyr)  
+  library(ggplot2)  
+  library(gridExtra)  
+  library(lattice)  
   ```
 
 2. Load and group data  
   ``` {r data, results = "hide"}  
-    activity <- read.csv("activity.csv", stringsAsFactors = FALSE)  
-    activityPlus <- activity  
-    activity <- activity[complete.cases(activity), ]  
+  activity <- read.csv("activity.csv", stringsAsFactors = FALSE)  
+  activityPlus <- activity  
+  activity <- activity[complete.cases(activity), ]  
   ```
 
 ## What is the mean number of steps per day?  
 1. Plot chart  
-  ```{r stepsperday, message=FALSE}  
-    # Summarise by date  
-    activityByDate <- group_by(activity, date)  
-    activity_sumDate <- summarise(activityByDate, steps = sum(steps))  
-    
-    # Plot histogram  
-    ggplot(activity_sumDate, aes(steps)) +   
-      geom_histogram(breaks = seq(0, 25000, 1000), col = "white", fill = "orangered2") +  
-      labs(title = "Total steps per day", x = "Steps", y = "Frequency") +  
-      theme(text = element_text(size = 10, family = "Avenir"))  
+  ```{r stepsperday, message = FALSE, echo = FALSE}  
+  # Summarise by date  
+  activityByDate <- group_by(activity, date)  
+  activity_sumDate <- summarise(activityByDate, steps = sum(steps))  
+  
+  # Plot histogram  
+  stepPlot <- ggplot(activity_sumDate, aes(steps)) +   
+    geom_histogram(breaks = seq(0, 25000, 1000), col = "white", fill = "orangered2") +  
+    labs(title = "Total steps per day", x = "Steps", y = "Frequency") +  
+    theme(text = element_text(size = 10, family = "Avenir"))  
+  stepPlot  
   ```
 
 2. Find mean and median number of steps  
-  ``` {r stepmean}
+  ``` {r stepmean}  
   stepMean <- mean(activity_sumDate$steps)  
+  stepMean  
   stepMedian <- median(activity_sumDate$steps)  
-  mean(activity_sumDate$steps)  
-  median(activity_sumDate$steps)  
+  stepMedian  
   ```  
 
 ## What is the average daily activity pattern?  
@@ -55,10 +56,11 @@ output:
   activity_sumTime <- summarise(activityByTime, steps = mean(steps))  
   
   # Plot time-series  
-  ggplot(activity_sumTime, aes(x = interval, y = steps)) +   
+  stepPlotTime <- ggplot(activity_sumTime, aes(x = interval, y = steps)) +   
     geom_line() +   
     labs(title = "Average steps per interval", x = "Time Interval", y = "Average steps") +   
     theme(text = element_text(size = 10, family = "Avenir"))  
+  stepPlotTime  
   ```  
   
 2. Find interval with maximum number of steps taken  
