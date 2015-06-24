@@ -120,15 +120,14 @@ stepMedianDiff
 Both mean and median fell, but median fell by a larger extent.  
 
 ## Are there differences in activity patterns between weekdays and weekends?  
-1. Create a new factor variable with two levels: "weekday" and "weekend."  
+1. Create a new factor variable with two levels: "weekday" and "weekend."
 ``` {r weekdiff}
 # Divide into weekday/weekend
 activityPlus$day <- ifelse(as.POSIXlt(as.Date(activityPlus$date))$wday%%6 == 0, "weekend", "weekday")
 activityPlus$day <- factor(activityPlus$day, levels = c("weekend", "weekday"))
 activityPlusInt <- aggregate(steps ~ interval + day, data = activityPlus, FUN = mean)
 ```  
-
-2. Plot for weekends and weekdays 
+2. Plot for weekends and weekdays
 ``` {r weekdiffplot}
 # Plot lattice plot
 activityPlusPlot <- xyplot(steps ~ interval | factor(day), data = activityPlusInt, aspect = 1/2, type = "l", ylab = "Number of steps", xlab = "Interval")
