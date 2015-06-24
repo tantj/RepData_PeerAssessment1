@@ -1,4 +1,9 @@
-# Reproducible Research: Peer Assessment 1
+---
+title: "Reproducible Research: Peer Assessment 1"
+output:
+  html_document:
+    keep_md: true
+---
 
 ##### Prepared 24 June 2015  
 
@@ -7,44 +12,30 @@
 1. Load required libraries  
   
   ```r
-    library(reshape2)  
-    library(dplyr)  
-    library(ggplot2)  
-    library(gridExtra)  
-    library(lattice)  
+  library(reshape2)  
+  library(dplyr)  
+  library(ggplot2)  
+  library(gridExtra)  
+  library(lattice)  
   ```
 
 2. Load and group data  
   
   ```r
-    activity <- read.csv("activity.csv", stringsAsFactors = FALSE)  
-    activityPlus <- activity  
-    activity <- activity[complete.cases(activity), ]  
+  activity <- read.csv("activity.csv", stringsAsFactors = FALSE)  
+  activityPlus <- activity  
+  activity <- activity[complete.cases(activity), ]  
   ```
 
 ## What is the mean number of steps per day?  
 1. Plot chart  
-  
-  ```r
-    # Summarise by date  
-    activityByDate <- group_by(activity, date)  
-    activity_sumDate <- summarise(activityByDate, steps = sum(steps))  
-    
-    # Plot histogram  
-    ggplot(activity_sumDate, aes(steps)) +   
-      geom_histogram(breaks = seq(0, 25000, 1000), col = "white", fill = "orangered2") +  
-      labs(title = "Total steps per day", x = "Steps", y = "Frequency") +  
-      theme(text = element_text(size = 10, family = "Avenir"))  
-  ```
-  
-  ![](Peer1_files/figure-html/stepsperday-1.png) 
+  ![plot of chunk stepsperday](figure/stepsperday-1.png) 
 
 2. Find mean and median number of steps  
   
   ```r
   stepMean <- mean(activity_sumDate$steps)  
-  stepMedian <- median(activity_sumDate$steps)  
-  mean(activity_sumDate$steps)  
+  stepMean  
   ```
   
   ```
@@ -52,7 +43,8 @@
   ```
   
   ```r
-  median(activity_sumDate$steps)  
+  stepMedian <- median(activity_sumDate$steps)  
+  stepMedian  
   ```
   
   ```
@@ -68,13 +60,14 @@
   activity_sumTime <- summarise(activityByTime, steps = mean(steps))  
   
   # Plot time-series  
-  ggplot(activity_sumTime, aes(x = interval, y = steps)) +   
+  stepPlotTime <- ggplot(activity_sumTime, aes(x = interval, y = steps)) +   
     geom_line() +   
     labs(title = "Average steps per interval", x = "Time Interval", y = "Average steps") +   
     theme(text = element_text(size = 10, family = "Avenir"))  
+  stepPlotTime  
   ```
   
-  ![](Peer1_files/figure-html/timeseries-1.png) 
+  ![plot of chunk timeseries](figure/timeseries-1.png) 
   
 2. Find interval with maximum number of steps taken  
   
@@ -120,7 +113,7 @@
   stepPlotPlus  
   ```
   
-  ![](Peer1_files/figure-html/missingvalueshistogram-1.png) 
+  ![plot of chunk missingvalueshistogram](figure/missingvalueshistogram-1.png) 
   
 4. Find mean and median with altered values 
   
@@ -181,6 +174,6 @@ Both mean and median fell, but median fell by a larger extent.
   activityPlusPlot  
   ```
   
-  ![](Peer1_files/figure-html/weekdiffplot-1.png) 
+  ![plot of chunk weekdiffplot](figure/weekdiffplot-1.png) 
 
 The plot shows that steps taken during weekends are more steady. Steps taken during weekdays show a large spike in the morning.  
