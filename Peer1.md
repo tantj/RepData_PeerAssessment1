@@ -1,7 +1,7 @@
 # Reproducible Research: Peer Assessment 1
 
 ##### Prepared 24 June 2015  
-===========================
+
   
 ## Prepare Environment and Load Data  
 1. Load required libraries  
@@ -13,6 +13,7 @@ library(ggplot2)
 library(gridExtra)
 library(lattice)
 ```
+
 2. Load and group data  
 
 ```r
@@ -22,7 +23,7 @@ activity <- activity[complete.cases(activity), ]
 ```
 
 ## What is the mean number of steps per day?
-1. Plot chart
+1. Plot chart  
 
 ```r
 # Summarise by date
@@ -39,7 +40,7 @@ stepPlot
 
 ![](Peer1_files/figure-html/stepsperday-1.png) 
 
-2. Find mean and median number of steps
+2. Find mean and median number of steps  
 
 ```r
 stepMean <- mean(activity_sumDate$steps)
@@ -60,7 +61,7 @@ stepMedian
 ```
 
 ## What is the average daily activity pattern?
-1. Time-series plot of average number steps taken per 5-minute interval
+1. Time-series plot of average number steps taken per 5-minute interval  
 
 ```r
 # Summarise by time intervals
@@ -77,7 +78,7 @@ stepPlotTime
 
 ![](Peer1_files/figure-html/timeseries-1.png) 
 
-2. Find interval with maximum number of steps taken
+2. Find interval with maximum number of steps taken  
 
 ```r
 timeMax <- activity_sumTime[which.max(activity_sumTime$steps), ]$interval
@@ -89,13 +90,13 @@ timeMax
 ```
 
 ## Inputting missing values
-1. Calculate and report number of missing values
+1. Calculate and report number of missing values  
 
 ```r
 numberNA <- sum(is.na(activityPlus$step))
 ```
 
-2. Replace missing values in the dataset. The mean steps in each time interval is used here.
+2. Replace missing values in the dataset. The mean steps in each time interval is used here.  
 
 ```r
 for (i in 1:nrow(activityPlus)) {
@@ -123,7 +124,7 @@ stepPlotPlus
 
 ![](Peer1_files/figure-html/missingvalueshistogram-1.png) 
 
-4. Find mean and median with altered values
+4. Find mean and median with altered values  
 
 ```r
 stepMeanPlus <- mean(activity_sumDatePlus$steps)
@@ -143,7 +144,7 @@ stepMedianPlus
 ## [1] 10641
 ```
 
-5. Find difference between mean and median of altered and unaltered values (altered minus unaltered)
+5. Find difference between mean and median of altered and unaltered values (altered minus unaltered)  
 
 ```r
 stepMeanDiff <- stepMeanPlus - stepMean
@@ -165,7 +166,7 @@ stepMedianDiff
 Both mean and median fell, but median fell by a larger extent.  
 
 ## Are there differences in activity patterns between weekdays and weekends?  
-1. Create a new factor variable with two levels: "weekday" and "weekend."
+1. Create a new factor variable with two levels: "weekday" and "weekend."  
 
 ```r
 # Divide into weekday/weekend
@@ -174,7 +175,7 @@ activityPlus$day <- factor(activityPlus$day, levels = c("weekend", "weekday"))
 activityPlusInt <- aggregate(steps ~ interval + day, data = activityPlus, FUN = mean)
 ```
 
-2. Plot for weekends and weekdays  
+2. Plot for weekends and weekdays 
 
 ```r
 # Plot lattice plot
@@ -184,4 +185,4 @@ activityPlusPlot
 
 ![](Peer1_files/figure-html/weekdiffplot-1.png) 
 
-The plot shows that steps taken during weekends are more steady. Steps taken during weekdays show a large spike in the morning.
+The plot shows that steps taken during weekends are more steady. Steps taken during weekdays show a large spike in the morning.  
